@@ -1,15 +1,12 @@
 ---
 name: Approve and merge Dependabot PR
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs: { }
     secrets:
       reviewbot-github-token:
         required: true
         description: GitHub token with permission to approve the PR (usually ${{ secrets.REVIEWBOT_GITHUB_TOKEN}})
-
-permissions:
-  pull-requests: write
 
 jobs:
   dependabot-fetch-metadata:

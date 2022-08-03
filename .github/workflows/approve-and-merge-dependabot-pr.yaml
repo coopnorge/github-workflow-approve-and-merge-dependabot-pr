@@ -38,4 +38,6 @@ jobs:
       startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
     steps:
       - run: |
+          if [ -z $GH_TOKEN ]; then echo "not empty"; fi
+      - run: |
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}

@@ -6,7 +6,8 @@ on:
     secrets:
       reviewbot-github-token:
         required: true
-        description: GitHub token with permission to approve the PR (usually ${{ secrets.REVIEWBOT_GITHUB_TOKEN}})
+        description: |
+          GitHub token with permission to approve the PR (usually secrets.REVIEWBOT_GITHUB_TOKEN )
 
 jobs:
   dependabot-fetch-metadata:

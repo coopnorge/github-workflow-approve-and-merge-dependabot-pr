@@ -16,6 +16,9 @@ on:
         description: |
           GitHub token with permission to approve the PR (usually secrets.REVIEWBOT_GITHUB_TOKEN )
 
+env:
+  GH_TOKEN: ${{ secrets.reviewbot-github-token }}
+
 jobs:
   dependabot-fetch-metadata:
     name: Fetch metadata of Dependabot update
@@ -31,8 +34,6 @@ jobs:
     needs:
       - dependabot-fetch-metadata
     runs-on: "ubuntu-latest"
-    env:
-      GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     if: |
       needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
       startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')

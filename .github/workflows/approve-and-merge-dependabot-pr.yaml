@@ -10,11 +10,17 @@ on:
         description: |
           Strategy type to use when Dependabot merges the PR.
           Check https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates#managing-dependabot-pull-requests-with-comment-commands
+    secrets:
+      reviewbot-github-token:
+        required: true
+        description: |
+          GitHub token with permission to approve the PR (usually secrets.REVIEWBOT_GITHUB_TOKEN )
 
 jobs:
   dependabot-fetch-metadata:
     name: Fetch metadata of Dependabot update
     runs-on: "ubuntu-latest"
+    if: ${{ github.actor == 'dependabot[bot]' }}
     outputs:
       package-ecosystem: ${{ steps.dependabot-metadata.outputs.package-ecosystem }}
       dependency-names: ${{ steps.dependabot-metadata.outputs.dependency-names }}
@@ -30,8 +36,7 @@ jobs:
       needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
       startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
     env:
-      GH_TOKEN: ${{ secrets.REVIEWBOT_GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
       - run: |
-          printenv
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}

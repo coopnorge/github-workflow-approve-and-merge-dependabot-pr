@@ -2,20 +2,22 @@
 name: Approve and merge Dependabot PR
 on:
   workflow_call:
-    inputs: { }
-    secrets:
-      reviewbot-github-token:
-        required: true
+    inputs:
+      merge-strategy:
+        type: string
+        required: false
+        default: squash and merge
         description: |
-          GitHub token with permission to approve the PR (usually secrets.REVIEWBOT_GITHUB_TOKEN )
+          Strategy type to use when Dependabot merges the PR.
+          Check https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates#managing-dependabot-pull-requests-with-comment-commands
 
 jobs:
   dependabot-fetch-metadata:
     name: Fetch metadata of Dependabot update
     runs-on: "ubuntu-latest"
-    if: ${{ github.actor == 'dependabot[bot]' }}
     outputs:
-      package-ecosystem: ${{ steps.dependabot-metadata.outputs.packages-ecosystem }}
+      package-ecosystem: ${{ steps.dependabot-metadata.outputs.package-ecosystem }}
+      dependency-names: ${{ steps.dependabot-metadata.outputs.dependency-names }}
     steps:
       - id: dependabot-metadata
         uses: dependabot/fetch-metadata@v1.3.3
@@ -24,18 +26,12 @@ jobs:
     needs:
       - dependabot-fetch-metadata
     runs-on: "ubuntu-latest"
-    env:
-      GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     if: |
       needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
-      (
-        needs.dependabot-fetch-metadata.outputs.dependency-names == 'coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1' ||
-        needs.dependabot-fetch-metadata.outputs.dependency-names == 'coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1' ||
-        needs.dependabot-fetch-metadata.outputs.dependency-names == 'coopnorge/engineering-docker-images/e0/devtools-kubernetes-v1beta1' ||
-        needs.dependabot-fetch-metadata.outputs.dependency-names == 'coopnorge/engineering-docker-images/e0/poetry-python3.8' ||
-        needs.dependabot-fetch-metadata.outputs.dependency-names == 'coopnorge/engineering-docker-images/e0/poetry-python3.9' ||
-        needs.dependabot-fetch-metadata.outputs.dependency-names == 'coopnorge/engineering-docker-images/e0/poetry-python3.10'
-      )
+      startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
+    env:
+      GH_TOKEN: ${{ secrets.REVIEWBOT_GITHUB_TOKEN }}
     steps:
       - run: |
-          gh pr review --approve --body "@dependabot squash and merge" --repo ${{ github.repository }} ${{ github.event.number }}
+          printenv
+          gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}

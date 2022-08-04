@@ -31,4 +31,5 @@ jobs:
       startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
     steps:
       - run: |
+          printenv
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}

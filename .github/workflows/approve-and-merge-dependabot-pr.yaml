@@ -29,6 +29,8 @@ jobs:
     if: |
       needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
       startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
+    env:
+      GH_TOKEN: ${{ secrets.REVIEWBOT_GITHUB_TOKEN }}
     steps:
       - run: |
           printenv

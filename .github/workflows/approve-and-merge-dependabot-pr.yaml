@@ -10,6 +10,19 @@ on:
         description: |
           Strategy type to use when Dependabot merges the PR.
           Check https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates#managing-dependabot-pull-requests-with-comment-commands
+      approve-condition:
+          type: string
+          required: false
+          default: |
+            (
+                needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
+                startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
+            ) || (
+                needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'pip' &&
+                needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+            )
+          description: |
+            Conditional statement used to approve PR
     secrets:
       reviewbot-github-token:
         required: true
@@ -24,6 +37,7 @@ jobs:
     outputs:
       package-ecosystem: ${{ steps.dependabot-metadata.outputs.package-ecosystem }}
       dependency-names: ${{ steps.dependabot-metadata.outputs.dependency-names }}
+      update-type: ${{ steps.dependabot-metadata.outputs.update-type }}
     steps:
       - id: dependabot-metadata
         uses: dependabot/fetch-metadata@v1.3.3
@@ -33,8 +47,7 @@ jobs:
       - dependabot-fetch-metadata
     runs-on: "ubuntu-latest"
     if: |
-      needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
-      startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
+        ${{ inputs.approve-condition }}}
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:

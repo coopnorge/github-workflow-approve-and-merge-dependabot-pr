@@ -9,7 +9,8 @@ update **only Docker** images for `coopnorge/engineering-docker-images/e0`.
 | Input variable           | Description                                                                                               | Required |
 |--------------------------|-----------------------------------------------------------------------------------------------------------|----------|
 | `reviewbot-github-token` | GitHub token with permission to approve the PR (usually `${{ secrets.REVIEWBOT_GITHUB_TOKEN}}`)           | Yes      |
-| `merge-strategy`         | Strategy type to use when Dependabot merges the PR. Check [managing-pull-requests-for-dependency-updates] | Yes      |
+| `merge-strategy`         | Strategy type to use when Dependabot merges the PR. Check [managing-pull-requests-for-dependency-updates] | No       |
+| `approve-condition`      | Conditional statement used to approve PR                                                                  | No       |
 
 Check [playbook.internal.coop] for detailed instructions.
 

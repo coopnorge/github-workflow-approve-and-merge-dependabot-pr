@@ -46,8 +46,7 @@ jobs:
     needs:
       - dependabot-fetch-metadata
     runs-on: "ubuntu-latest"
-    if: |
-        ${{ inputs.approve-condition }}}
+    if: ${{ inputs.approve-condition }}}
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:

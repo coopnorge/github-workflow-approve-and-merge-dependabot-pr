@@ -11,18 +11,18 @@ on:
           Strategy type to use when Dependabot merges the PR.
           Check https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates#managing-dependabot-pull-requests-with-comment-commands
       approve-condition:
-          type: string
-          required: false
-          default: |
-            (
-                needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
-                startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
-            ) || (
-                needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'pip' &&
-                needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
-            )
-          description: |
-            Conditional statement used to approve PR
+        type: string
+        required: false
+        default: |
+          (
+              needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
+              startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
+          ) || (
+              needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'pip' &&
+              needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+          )
+        description: |
+          Conditional statement used to approve PR
     secrets:
       reviewbot-github-token:
         required: true

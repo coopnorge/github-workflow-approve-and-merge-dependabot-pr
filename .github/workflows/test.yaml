@@ -1,0 +1,15 @@
+on:
+  pull_request: {}
+
+jobs:
+  main:
+    uses: "./.github/workflows/example.yaml"
+    with:
+      condition: >
+        (
+          ${{ github.repository }} == "coopnorge/github-workflow-approve-and-merge-dependabot-pr" &&
+          ${{ github.repository }} == "coopnorge/github-workflow-approve-and-merge-dependabot-pr" &&
+          ${{ github.repository }} == coopnorge/github*
+        ) || (
+          ${{ github.repository }} == "coopnorge/github-workflow-approve-and-merge-dependabot-pr"
+        )

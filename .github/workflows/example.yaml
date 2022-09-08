@@ -1,0 +1,36 @@
+---
+on:
+  workflow_call:
+    inputs:
+      condition:
+        type: string
+        required: false
+        default: >-
+          (
+            ${{ github.repository }} == "coopnorge/github-workflow-approve-and-merge-dependabot-pr" &&
+            ${{ github.repository }} == "coopnorge/github-workflow-approve-and-merge-dependabot-pr" &&
+            ${{ github.repository }} == coopnorge/github*
+          ) || (
+            ${{ github.repository }} == "coopnorge/github-workflow-approve-and-merge-dependabot-pr"
+          )
+
+jobs:
+  main:
+    runs-on: "ubuntu-latest"
+    env:
+      CONDITION: ${{ inputs.condition }}
+    steps:
+#       - id: trimp-condition
+#         run: |
+#           echo "${{ inputs.condition }}" > tmp.txt
+#           cat tmp.txt
+#           tr "\n" " " < tmp.txt > output.txt
+#           export CONDITION=$(cat output.txt)
+#           printenv
+      - run: |
+          if [[ ${{ inputs.condition }} ]]
+          then
+            echo "hello"
+          else
+            echo "world"
+          fi

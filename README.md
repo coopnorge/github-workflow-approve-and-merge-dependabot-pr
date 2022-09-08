@@ -2,7 +2,8 @@
 
 [dependabot-approve-and-merge.yaml] is a workflow to automatically approve and
 merge Dependabot PRs. This workflow has a limitation at the moment: it will
-update **only Docker** images for `coopnorge/engineering-docker-images/e0`.
+update Docker images for `coopnorge/engineering-docker-images/e0` and Python patch
+updates.
 
 ## Inputs
 
@@ -10,7 +11,9 @@ update **only Docker** images for `coopnorge/engineering-docker-images/e0`.
 |--------------------------|-----------------------------------------------------------------------------------------------------------|----------|
 | `reviewbot-github-token` | GitHub token with permission to approve the PR (usually `${{ secrets.REVIEWBOT_GITHUB_TOKEN}}`)           | Yes      |
 | `merge-strategy`         | Strategy type to use when Dependabot merges the PR. Check [managing-pull-requests-for-dependency-updates] | No       |
-| `approve-condition`      | Conditional statement used to approve PR                                                                  | No       |
+| `approve-condition`      | DEPRECATED!. Conditional statement used to approve PR                                                     | No       |
+| `docker`                 | If enabled, the workflow approves and merge engineering devtools images updates                           | No       |
+| `python`                 | If enabled, the workflow approves and merge patch Python updates                                          | No       |
 
 Check [playbook.internal.coop] for detailed instructions.
 

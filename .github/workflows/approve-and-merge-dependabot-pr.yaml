@@ -88,12 +88,11 @@ jobs:
       - docker
       - python
       - golang
+    if: always()
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
       - run: |
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}
         if: |
-          needs.docker.result == 'success' ||
-          needs.python.result == 'success' ||
-          needs.golang.result == 'success'
+          contains(needs.*.result, 'success')

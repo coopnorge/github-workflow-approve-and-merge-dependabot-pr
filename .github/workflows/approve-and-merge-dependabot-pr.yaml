@@ -22,6 +22,13 @@ on:
         default: true
         description: |
           If enabled, the workflow approves and merge patch Python updates
+      golang:
+        type: boolean
+        required: false
+        default: true
+        description: |
+          If enabled, the workflow approves and megres patch for go modules
+
 
     secrets:
       reviewbot-github-token:
@@ -64,16 +71,28 @@ jobs:
     steps:
       - run: echo "Found matching Python dependencies to auto-update"
 
+  golang:
+    runs-on: "ubuntu-latest"
+    needs:
+      - dependabot-fetch-metadata
+    steps:
+      - run: echo "Found matching Go modules to auto-update"
+        if: |
+          inputs.golang == true &&
+          needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'gomod' &&
+          needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+
   approve-pr:
     runs-on: "ubuntu-latest"
     needs:
       - docker
       - python
+      - golang
+    if: always()
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
       - run: |
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}
         if: |
-          needs.docker.result == 'success' ||
-          needs.python.result == 'success'
+          contains(needs.*.result, 'success')

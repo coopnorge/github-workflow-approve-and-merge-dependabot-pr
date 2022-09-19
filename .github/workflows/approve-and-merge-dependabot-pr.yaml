@@ -97,12 +97,12 @@ jobs:
       - docker
       - python
       - golang
-    if: |
-      needs.docker.outputs.approve == 'true' ||
-      needs.python.outputs.approve == 'true' ||
-      needs.golang.outputs.approve == 'true'
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
       - run: |
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}
+        if: |
+          needs.docker.outputs.approve == 'true' ||
+          needs.python.outputs.approve == 'true' ||
+          needs.golang.outputs.approve == 'true'

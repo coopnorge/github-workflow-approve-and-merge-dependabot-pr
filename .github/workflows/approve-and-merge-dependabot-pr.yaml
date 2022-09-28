@@ -104,11 +104,11 @@ jobs:
       - dependabot-fetch-metadata
     steps:
       - id: set-output
-      run: echo "::set-output name=approve::true"
-      if: |
-        inputs.npm-and-yarn == true &&
-        needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'npm_and_yarn' &&
-        needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+        run: echo "::set-output name=approve::true"
+        if: |
+          inputs.npm-and-yarn == true &&
+          needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'npm_and_yarn' &&
+          needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
   approve-pr:
     runs-on: "ubuntu-latest"

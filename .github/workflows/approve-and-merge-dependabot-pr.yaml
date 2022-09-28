@@ -21,13 +21,19 @@ on:
         required: false
         default: true
         description: |
-          If enabled, the workflow approves and merge patch Python updates
+          If enabled, the workflow approves and merges patch Python updates
       golang:
         type: boolean
         required: false
         default: true
         description: |
-          If enabled, the workflow approves and megres patch for go modules
+          If enabled, the workflow approves and merges patch for go modules
+      npm-and-yarn:
+        type: boolean
+        required: false
+        default: true
+        description: |
+          If enabled, the workflow approves and merges patch for npm and yarn ecosystem
 
     secrets:
       reviewbot-github-token:
@@ -90,6 +96,20 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'gomod' &&
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
+  npm-and-yarn:
+    runs-on: "ubuntu-latest"
+    outputs:
+      approve: ${{ steps.set-output.outputs.approve }}
+    needs:
+      - dependabot-fetch-metadata
+      steps:
+        - id: set-output
+        run: echo "::set-output name=approve::true"
+        if: |
+          inputs.npm-and-yarn == true &&
+          needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'npm_and_yarn' &&
+          needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+
   approve-pr:
     runs-on: "ubuntu-latest"
     needs:
@@ -104,4 +124,5 @@ jobs:
         if: |
           needs.docker.outputs.approve == 'true' ||
           needs.python.outputs.approve == 'true' ||
-          needs.golang.outputs.approve == 'true'
+          needs.golang.outputs.approve == 'true' ||
+          needs.npm-and-yarn.outputs.approve == 'true'

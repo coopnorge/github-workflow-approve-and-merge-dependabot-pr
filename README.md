@@ -16,6 +16,7 @@ updates.
 | `python`                 | If enabled, the workflow approves and merges patch Python updates                                         | No       |
 | `golang`                 | If enabled, the workflow approves and merges patch Go updates                                             | No       |
 | `npm-and-yarn`           | If enabled, the workflow approves and merges patch npm and yarn updates                                   | No       |
+| `github-actions`         | If enabled, the workflow approves and merges patch GitHub Actions updates                                 | No       |
 
 Check [playbook.internal.coop] for detailed instructions.
 

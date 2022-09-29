@@ -34,7 +34,12 @@ on:
         default: true
         description: |
           If enabled, the workflow approves and merges patch for npm and yarn ecosystem
-
+      github-actions:
+        type: boolean
+        required: false
+        default: true
+        description: |
+          If enabled, the workflow approves and merges patch for GitHub Actions
     secrets:
       reviewbot-github-token:
         required: true
@@ -110,6 +115,20 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'npm_and_yarn' &&
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
+  github-actions:
+    runs-on: "ubuntu-latest"
+    outputs:
+      approve: ${{ steps.set-output.outputs.approve }}
+    needs:
+      - dependabot-fetch-metadata
+    steps:
+      - id: set-output
+        run: echo "::set-output name=approve::true"
+        if: |
+          inputs.github-actions == true &&
+          needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'github-actions' &&
+          needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+
   approve-pr:
     runs-on: "ubuntu-latest"
     needs:
@@ -117,6 +136,7 @@ jobs:
       - python
       - golang
       - npm-and-yarn
+      - github-actions
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
@@ -126,4 +146,5 @@ jobs:
           needs.docker.outputs.approve == 'true' ||
           needs.python.outputs.approve == 'true' ||
           needs.golang.outputs.approve == 'true' ||
-          needs.npm-and-yarn.outputs.approve == 'true'
+          needs.npm-and-yarn.outputs.approve == 'true' ||
+          needs.npm-and-yarn.github-actions.approve == 'true'

@@ -21,5 +21,5 @@ updates.
 Check [playbook.internal.coop] for detailed instructions.
 
 [dependabot-approve-and-merge.yaml]: .github/workflows/approve-and-merge-dependabot-pr.yaml
-[playbook.internal.coop]: https://playbook.internal.coop
+[playbook.internal.coop]: https://playbook.internal.coop/platforms/cloud_platform/dev_build_deploy/github/guide_github_dependabot.html?h=dependabot#enabling-auto-approve-for-dependabot
 [managing-pull-requests-for-dependency-updates]: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates#managing-dependabot-pull-requests-with-comment-commands

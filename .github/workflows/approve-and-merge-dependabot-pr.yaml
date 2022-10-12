@@ -85,7 +85,10 @@ jobs:
         if: |
           inputs.python == true &&
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'pip' &&
-          needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
+          (
+            needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch' ||
+            needs.dependabot-fetch-metadata.outputs.dependency-type == 'direct:development'
+          )
 
   golang:
     runs-on: "ubuntu-latest"

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: github-workflow-approve-and-merge-dependabot-pr
+  annotations:
+    github.com/project-slug: coopnorge/github-workflow-approve-and-merge-dependabot-pr
+spec:
+  type: library
+  lifecycle: production
+  owner: engineering

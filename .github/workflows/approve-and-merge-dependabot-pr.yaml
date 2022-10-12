@@ -98,7 +98,10 @@ jobs:
         run: echo "::set-output name=approve::true"
         if: |
           inputs.golang == true &&
-          needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'gomod' &&
+          (
+            needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'gomod' ||
+            needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'go_modules'
+          ) &&
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
   npm-and-yarn:

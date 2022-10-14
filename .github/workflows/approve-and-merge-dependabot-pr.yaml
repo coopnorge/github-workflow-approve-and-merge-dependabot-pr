@@ -154,4 +154,4 @@ jobs:
           needs.python.outputs.approve == 'true' ||
           needs.golang.outputs.approve == 'true' ||
           needs.npm-and-yarn.outputs.approve == 'true' ||
-          needs.npm-and-yarn.github-actions.approve == 'true'
+          needs.github-actions.outputs.approve == 'true'

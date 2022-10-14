@@ -55,7 +55,7 @@ jobs:
       package-ecosystem: ${{ steps.dependabot-metadata.outputs.package-ecosystem }}
       dependency-names: ${{ steps.dependabot-metadata.outputs.dependency-names }}
       update-type: ${{ steps.dependabot-metadata.outputs.update-type }}
-      dependency-type: ${{ step.dependabot-metadata.outputs.dependency-type }}
+      dependency-type: ${{ steps.dependabot-metadata.outputs.dependency-type }}
     steps:
       - id: dependabot-metadata
         uses: dependabot/fetch-metadata@v1.3.3

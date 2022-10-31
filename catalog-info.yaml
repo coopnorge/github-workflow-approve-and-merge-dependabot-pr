@@ -2,6 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: github-workflow-approve-and-merge-dependabot-pr
+  title: Approve and merge Dependabot Pull Requests GitHub Actions Workflow
   annotations:
     github.com/project-slug: coopnorge/github-workflow-approve-and-merge-dependabot-pr
 spec:

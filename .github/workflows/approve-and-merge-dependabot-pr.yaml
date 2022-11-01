@@ -58,17 +58,17 @@ jobs:
       dependency-type: ${{ steps.dependabot-metadata.outputs.dependency-type }}
     steps:
       - id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.3.3
+        uses: dependabot/fetch-metadata@v1.3.4
 
   docker:
     runs-on: "ubuntu-latest"
     needs:
       - dependabot-fetch-metadata
     outputs:
-      approve: ${{ steps.set-output.outputs.approve }}
+      approve: ${{ steps.set-output.outputs.APPROVE }}
     steps:
       - id: set-output
-        run: echo "::set-output name=approve::true"
+        run: echo "APPROVE=true" >> $GITHUB_OUTPUT
         if: |
           inputs.docker == true &&
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'docker' &&
@@ -79,10 +79,10 @@ jobs:
     needs:
       - dependabot-fetch-metadata
     outputs:
-      approve: ${{ steps.set-output.outputs.approve }}
+      approve: ${{ steps.set-output.outputs.APPROVE }}
     steps:
       - id: set-output
-        run: echo "::set-output name=approve::true"
+        run: echo "APPROVE=true" >> $GITHUB_OUTPUT
         if: |
           inputs.python == true &&
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'pip' &&
@@ -94,12 +94,12 @@ jobs:
   golang:
     runs-on: "ubuntu-latest"
     outputs:
-      approve: ${{ steps.set-output.outputs.approve }}
+      approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
       - dependabot-fetch-metadata
     steps:
       - id: set-output
-        run: echo "::set-output name=approve::true"
+        run: echo "APPROVE=true" >> $GITHUB_OUTPUT
         if: |
           inputs.golang == true &&
           (
@@ -111,12 +111,12 @@ jobs:
   npm-and-yarn:
     runs-on: "ubuntu-latest"
     outputs:
-      approve: ${{ steps.set-output.outputs.approve }}
+      approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
       - dependabot-fetch-metadata
     steps:
       - id: set-output
-        run: echo "::set-output name=approve::true"
+        run: echo "APPROVE=true" >> $GITHUB_OUTPUT
         if: |
           inputs.npm-and-yarn == true &&
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'npm_and_yarn' &&
@@ -125,12 +125,12 @@ jobs:
   github-actions:
     runs-on: "ubuntu-latest"
     outputs:
-      approve: ${{ steps.set-output.outputs.approve }}
+      approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
       - dependabot-fetch-metadata
     steps:
       - id: set-output
-        run: echo "::set-output name=approve::true"
+        run: echo "APPROVE=true" >> $GITHUB_OUTPUT
         if: |
           inputs.github-actions == true &&
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'github_actions' &&

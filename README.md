@@ -13,10 +13,10 @@ updates.
 | `merge-strategy`         | Strategy type to use when Dependabot merges the PR. Check [managing-pull-requests-for-dependency-updates] | No       |
 | `approve-condition`      | DEPRECATED!. Conditional statement used to approve PR                                                     | No       |
 | `docker`                 | If enabled, the workflow approves and merges engineering devtools images updates                          | No       |
-| `python`                 | If enabled, the workflow approves and merges patch Python updates                                         | No       |
+| `python`                 | If enabled, the workflow approves and merges patch and minor Python updates                               | No       |
 | `golang`                 | If enabled, the workflow approves and merges patch Go updates                                             | No       |
 | `npm-and-yarn`           | If enabled, the workflow approves and merges patch npm and yarn updates                                   | No       |
-| `github-actions`         | If enabled, the workflow approves and merges patch GitHub Actions updates                                 | No       |
+| `github-actions`         | If enabled, the workflow approves and merges patch and minor GitHub Actions updates                       | No       |
 
 Check [playbook.internal.coop] for detailed instructions.
 

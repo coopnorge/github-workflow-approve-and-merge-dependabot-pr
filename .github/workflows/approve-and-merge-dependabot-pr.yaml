@@ -143,7 +143,7 @@ jobs:
           (
             needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch' ||
             needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-minor'
-        )
+          )
 
   approve-pr:
     runs-on: "ubuntu-latest"

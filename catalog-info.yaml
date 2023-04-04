@@ -3,8 +3,10 @@ kind: Component
 metadata:
   name: github-workflow-approve-and-merge-dependabot-pr
   title: Approve and merge Dependabot Pull Requests GitHub Actions Workflow
+  description: GitHub Actions workflow to approve and merge @dependabot PRs
   annotations:
     github.com/project-slug: coopnorge/github-workflow-approve-and-merge-dependabot-pr
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: library
   lifecycle: production

@@ -88,7 +88,7 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'pip' &&
           (
             (
-              needs.dependabot-fetch-metadata.outputs.dependency-type = 'direct:production' &&
+              needs.dependabot-fetch-metadata.outputs.dependency-type == 'direct:production' &&
               (
                 needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch' ||
                 needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-minor'

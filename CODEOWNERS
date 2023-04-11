@@ -1,5 +1,6 @@
 * @coopnorge/engineering
 .github/workflows/*.yaml @coopnorge/github-review-bots @coopnorge/engineering
+Dockerfile @coopnorge/github-review-bots @coopnorge/engineering
 
 /CODEOWNERS @coopnorge/cloud-security
 

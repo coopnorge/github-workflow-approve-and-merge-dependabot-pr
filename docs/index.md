@@ -82,6 +82,12 @@ See a specific example for ecosystem below.
     yarn.lock  @coopnorge/github-review-bots @coopnorge/<team-name>
     ```
 
+=== "GitHub Actions"
+
+    ```text
+    .github/workflows/*.yaml @coopnorge/github-review-bots @coopnorge/<team-name>
+    ```
+
 ## Customise workflow behaviour
 
 You can override the behaviour of the workflow by marking ecosystems flags:

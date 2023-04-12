@@ -31,7 +31,7 @@ on:
       - reopened
       - synchronize
     branches:
-      - dependabot/*
+      - 'dependabot/**'
 
 permissions:
   pull-requests: write

@@ -27,11 +27,8 @@ on:
   pull_request_target:
     types:
       - opened
-      - edited
       - reopened
       - synchronize
-    branches:
-      - dependabot/*
 
 permissions:
   pull-requests: write
@@ -39,6 +36,7 @@ permissions:
 jobs:
   main:
     name: Approve and merge Dependabot PR
+    if: startsWith(github.head_ref, 'dependabot/')
     uses: coopnorge/github-workflow-approve-and-merge-dependabot-pr/.github/workflows/approve-and-merge-dependabot-pr.yaml@main
     secrets:
       reviewbot-github-token: ${{ secrets.REVIEWBOT_GITHUB_TOKEN }}

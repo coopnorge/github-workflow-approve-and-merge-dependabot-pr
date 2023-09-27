@@ -40,6 +40,12 @@ on:
         default: true
         description: |
           If enabled, the workflow approves and merges patch for GitHub Actions
+      nuget:
+        type: boolean
+        required: false
+        default: true
+        description: |
+          If enabled, the workflow approves and merges minor and patch for nuget     
     secrets:
       reviewbot-github-token:
         required: true
@@ -145,6 +151,23 @@ jobs:
             needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-minor'
           )
 
+  nuget:
+    runs-on: "ubuntu-latest"
+    outputs:
+      approve: ${{ steps.set-output.outputs.APPROVE }}
+    needs:
+      - dependabot-fetch-metadata
+    steps:
+      - id: set-output
+        run: echo "APPROVE=true" >> $GITHUB_OUTPUT
+        if: |
+          inputs.nuget == true &&
+          needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'nuget' &&
+          (
+            needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch' ||
+            needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-minor'
+          )
+
   approve-pr:
     runs-on: "ubuntu-latest"
     needs:
@@ -153,6 +176,7 @@ jobs:
       - golang
       - npm-and-yarn
       - github-actions
+      - nuget
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
@@ -163,4 +187,5 @@ jobs:
           needs.python.outputs.approve == 'true' ||
           needs.golang.outputs.approve == 'true' ||
           needs.npm-and-yarn.outputs.approve == 'true' ||
-          needs.github-actions.outputs.approve == 'true'
+          needs.github-actions.outputs.approve == 'true' ||
+          needs.nuget.outputs.approve == 'true'

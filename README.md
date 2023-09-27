@@ -15,6 +15,7 @@ workflow to automatically approve and merge Dependabot PRs.
 | `golang`                 | If enabled, the workflow approves and merges patch Go updates                                             | No       |
 | `npm-and-yarn`           | If enabled, the workflow approves and merges patch npm and yarn updates                                   | No       |
 | `github-actions`         | If enabled, the workflow approves and merges patch and minor GitHub Actions updates                       | No       |
+| `nuget`                  | If enabled, the workflow approves and merges patch and minor NuGet updates                                | No       |
 
 Check [docs][docs] for detailed instructions.
 

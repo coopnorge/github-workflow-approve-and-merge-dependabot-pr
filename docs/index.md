@@ -11,6 +11,7 @@ if build checks are passing.
 | `golang` | `patch` |
 | `npm-and-yarn` | `patch` |
 | `github-actions` | `minor`, `patch` |
+| `nuget` | `minor`, `patch` |
 
 ## Configure workflow in your repository
 
@@ -86,6 +87,12 @@ See a specific example for ecosystem below.
     .github/workflows/*.yaml @coopnorge/github-review-bots @coopnorge/<team-name>
     ```
 
+=== "NuGet"
+
+    ```text
+    *.csproj @coopnorge/github-review-bots @coopnorge/<team-name>
+    ```
+
 ## Customise workflow behaviour
 
 You can override the behaviour of the workflow by marking ecosystems flags:
@@ -94,4 +101,5 @@ You can override the behaviour of the workflow by marking ecosystems flags:
 - `python`,
 - `golang`,
 - `npm-and-yarn`,
-- `github-actions`.
+- `github-actions`,
+- `nuget`.

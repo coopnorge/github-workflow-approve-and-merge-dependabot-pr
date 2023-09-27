@@ -40,6 +40,12 @@ on:
         default: true
         description: |
           If enabled, the workflow approves and merges patch for GitHub Actions
+      nuget:
+        type: boolean
+        required: false
+        default: true
+        description: |
+          If enabled, the workflow approves and merges minor and patch for nuget     
     secrets:
       reviewbot-github-token:
         required: true
@@ -155,6 +161,7 @@ jobs:
       - id: set-output
         run: echo "APPROVE=true" >> $GITHUB_OUTPUT
         if: |
+          inputs.nuget == true &&
           needs.dependabot-fetch-metadata.outputs.package-ecosystem == 'nuget' &&
           (
             needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch' ||

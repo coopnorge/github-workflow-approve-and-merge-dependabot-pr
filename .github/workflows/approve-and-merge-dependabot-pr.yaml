@@ -64,7 +64,7 @@ jobs:
       dependency-type: ${{ steps.dependabot-metadata.outputs.dependency-type }}
     steps:
       - id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.6.0
+        uses: dependabot/fetch-metadata@v2.0.0
 
   docker:
     runs-on: "ubuntu-latest"

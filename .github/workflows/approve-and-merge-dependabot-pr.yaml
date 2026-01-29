@@ -195,7 +195,7 @@ jobs:
           fi
       - name: run merge
         env:
-          METHOD: ${{ steps.method.outputs.method }}
+          METHOD: ${{ steps.merge-method.outputs.method }}
         run: |
           gh pr review \
             --approve \

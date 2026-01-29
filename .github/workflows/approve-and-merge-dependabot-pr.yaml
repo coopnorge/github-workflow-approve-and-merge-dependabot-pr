@@ -2,6 +2,12 @@ name: Approve and merge Dependabot PR
 on:
   workflow_call:
     inputs:
+      automerge:
+        type: boolean
+        required: false
+        default: true
+        description: |
+          If enabled, the workflow will also set auto merge for the PR
       merge-strategy:
         type: string
         required: false
@@ -44,7 +50,7 @@ on:
         required: false
         default: true
         description: |
-          If enabled, the workflow approves and merges minor and patch for nuget     
+          If enabled, the workflow approves and merges minor and patch for nuget
     secrets:
       reviewbot-github-token:
         required: true
@@ -179,6 +185,33 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
+      - name: Determine merge flag
+        shell: bash
+        id: merge-strategy
+        env:
+          MERGE_STRATEGY: ${{ inputs.merge-strategy }}
+        run: |
+          case "$MERGE_STRATEGY" in
+            "squash and merge")
+              merge_flag="--squash"
+              ;;
+            "rebase and merge")
+              merge_flag="--rebase"
+              ;;
+            "merge commit")
+              merge_flag="--merge"
+              ;;
+            *)
+              echo "Invalid merge strategy: $MERGE_STRATEGY" >&2
+                exit 1
+                ;;
+          esac
+          echo "merge_flag=$merge_flag" >> "$GITHUB_OUTPUT"
+      - name: Set auto merge
+        run: |
+          gh pr merge ${{ github.event.number }} ${{ steps.merge-strategy.outputs.merge_flag }} --repo ${{ github.repository }} --auto
+        if: |
+          inputs.automerge == true &&
       - run: |
           gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}
         if: |

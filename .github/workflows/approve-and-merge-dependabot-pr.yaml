@@ -185,13 +185,13 @@ jobs:
           METHOD: ${{ inputs.merge-strategy }}
         run: |
           if [[ "${METHOD}" == "squash and merge" ]] ; then
-            "method=--squash" >> $GITHUB_OUTPUT
+            echo "method=--squash" >> $GITHUB_OUTPUT
           elif [[ "${METHOD}" == "merge" ]] ; then
-            "method=--merge" >> $GITHUB_OUTPUT
+            echo "method=--merge" >> $GITHUB_OUTPUT
           elif [[ "${METHOD}" == "rebase" ]] ; then
-            "method=--rebase" >> $GITHUB_OUTPUT
+            echo "method=--rebase" >> $GITHUB_OUTPUT
           else
-            "method=--squash" >> $GITHUB_OUTPUT
+            echo "method=--squash" >> $GITHUB_OUTPUT
           fi
       - name: run merge
         env:

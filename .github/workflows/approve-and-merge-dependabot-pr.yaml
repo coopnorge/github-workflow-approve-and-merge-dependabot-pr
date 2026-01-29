@@ -44,7 +44,7 @@ on:
         required: false
         default: true
         description: |
-          If enabled, the workflow approves and merges minor and patch for nuget     
+          If enabled, the workflow approves and merges minor and patch for nuget
     secrets:
       reviewbot-github-token:
         required: true
@@ -179,8 +179,30 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.reviewbot-github-token }}
     steps:
-      - run: |
-          gh pr review --approve --body "@dependabot ${{ inputs.merge-strategy }}" --repo ${{ github.repository }} ${{ github.event.number }}
+      - name: merge method selector
+        id: merge-method
+        env:
+          METHOD: ${{ inputs.merge-strategy }}
+        run: |
+          if [[ "${METHOD}" == "squash and merge" ]] ; then
+            "method=--squash" >> $GITHUB_OUTPUT
+          elif [[ "${METHOD}" == "merge" ]] ; then
+            "method=--merge" >> $GITHUB_OUTPUT
+          elif [[ "${METHOD}" == "rebase" ]] ; then
+            "method=--rebase" >> $GITHUB_OUTPUT
+          else
+            "method=--squash" >> $GITHUB_OUTPUT
+          fi
+      - name: run merge
+        env:
+          METHOD: ${{ steps.method.outputs.method }}
+        run: |
+          gh pr review \
+            --approve \
+            --body "approved and merged by github-workflow-approve-and-merge-dependabot-pr" \
+            --repo ${{ github.repository }} ${{ github.event.number }}
+
+          gh pr merge --auto ${METHOD} --repo ${{ github.repository }} ${{ github.event.number }}
         if: |
           needs.docker.outputs.approve == 'true' ||
           needs.python.outputs.approve == 'true' ||

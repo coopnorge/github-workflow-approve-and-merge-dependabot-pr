@@ -67,6 +67,7 @@ jobs:
 
   docker:
     runs-on: "ubuntu-24.04"
+    permissions: {}
     needs:
       - dependabot-fetch-metadata
     outputs:
@@ -81,6 +82,7 @@ jobs:
 
   python:
     runs-on: "ubuntu-24.04"
+    permissions: {}
     needs:
       - dependabot-fetch-metadata
     outputs:
@@ -104,6 +106,7 @@ jobs:
 
   golang:
     runs-on: "ubuntu-24.04"
+    permissions: {}
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -121,6 +124,7 @@ jobs:
 
   npm-and-yarn:
     runs-on: "ubuntu-24.04"
+    permissions: {}
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -135,6 +139,7 @@ jobs:
 
   github-actions:
     runs-on: "ubuntu-24.04"
+    permissions: {}
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -152,6 +157,7 @@ jobs:
 
   nuget:
     runs-on: "ubuntu-24.04"
+    permissions: {}
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:

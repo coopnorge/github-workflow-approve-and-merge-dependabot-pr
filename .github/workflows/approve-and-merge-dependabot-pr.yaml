@@ -54,7 +54,7 @@ on:
 jobs:
   dependabot-fetch-metadata:
     name: Fetch metadata of Dependabot update
-    runs-on: "ubuntu-24.04"
+    runs-on: ubuntu-slim
     if: ${{ github.actor == 'dependabot[bot]' }}
     outputs:
       package-ecosystem: ${{ steps.dependabot-metadata.outputs.package-ecosystem }}
@@ -66,8 +66,8 @@ jobs:
         uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
 
   docker:
-    runs-on: "ubuntu-24.04"
     permissions: {}
+    runs-on: ubuntu-slim
     needs:
       - dependabot-fetch-metadata
     outputs:
@@ -81,8 +81,8 @@ jobs:
           startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
 
   python:
-    runs-on: "ubuntu-24.04"
     permissions: {}
+    runs-on: ubuntu-slim
     needs:
       - dependabot-fetch-metadata
     outputs:
@@ -105,8 +105,8 @@ jobs:
           )
 
   golang:
-    runs-on: "ubuntu-24.04"
     permissions: {}
+    runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -123,8 +123,8 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
   npm-and-yarn:
-    runs-on: "ubuntu-24.04"
     permissions: {}
+    runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -138,8 +138,8 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
   github-actions:
-    runs-on: "ubuntu-24.04"
     permissions: {}
+    runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -156,8 +156,8 @@ jobs:
           )
 
   nuget:
-    runs-on: "ubuntu-24.04"
     permissions: {}
+    runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
     needs:
@@ -174,7 +174,7 @@ jobs:
           )
 
   approve-pr:
-    runs-on: "ubuntu-24.04"
+    runs-on: ubuntu-slim
     needs:
       - docker
       - python

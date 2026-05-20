@@ -14,7 +14,7 @@ jobs:
     if: always()
     needs:
       - techdocs
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-slim
     steps:
       - run: exit 1
         if: |

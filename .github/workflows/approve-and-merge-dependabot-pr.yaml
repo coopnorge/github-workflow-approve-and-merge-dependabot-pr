@@ -66,6 +66,7 @@ jobs:
         uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
 
   docker:
+    permissions: {}
     runs-on: ubuntu-slim
     needs:
       - dependabot-fetch-metadata
@@ -80,6 +81,7 @@ jobs:
           startsWith(needs.dependabot-fetch-metadata.outputs.dependency-names, 'coopnorge/engineering-docker-images/e0')
 
   python:
+    permissions: {}
     runs-on: ubuntu-slim
     needs:
       - dependabot-fetch-metadata
@@ -103,6 +105,7 @@ jobs:
           )
 
   golang:
+    permissions: {}
     runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
@@ -120,6 +123,7 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
   npm-and-yarn:
+    permissions: {}
     runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
@@ -134,6 +138,7 @@ jobs:
           needs.dependabot-fetch-metadata.outputs.update-type == 'version-update:semver-patch'
 
   github-actions:
+    permissions: {}
     runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}
@@ -151,6 +156,7 @@ jobs:
           )
 
   nuget:
+    permissions: {}
     runs-on: ubuntu-slim
     outputs:
       approve: ${{ steps.set-output.outputs.APPROVE }}

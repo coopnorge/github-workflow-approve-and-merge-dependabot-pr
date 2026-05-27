@@ -11,12 +11,10 @@ jobs:
     uses: coopnorge/github-workflow-techdocs/.github/workflows/techdocs.yaml@v0
 
   build:
-    if: always()
+    if: failure() || cancelled()
     needs:
       - techdocs
     runs-on: ubuntu-slim
     steps:
       - run: exit 1
-        if: |
-          needs.techdocs.result == 'failure'
     permissions: {}

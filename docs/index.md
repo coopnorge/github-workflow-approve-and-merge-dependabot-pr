@@ -1,25 +1,25 @@
 # GitHub workflow to approve and merge PR created by @dependabot
 
-You can use this workflow to enable automatic merge Dependabot PR.
-This workflow will automatically approve and merge Dependabot PR
-if build checks are passing.
+You can use this workflow to enable automatic merge Dependabot PR. This workflow
+will automatically approve and merge Dependabot PR if build checks are passing.
 
-| Ecosystem | Approve condition |
-| :--- | :--- |
-| `docker` | Only images `coopnorge/engineering-docker-images/e0` |
-| `python` | Development dependencies: `major`, `minor`, `patch`. Production dependencies: `minor`, `patch` |
-| `golang` | `patch` |
-| `npm-and-yarn` | `patch` |
-| `github-actions` | `minor`, `patch` |
-| `nuget` | `minor`, `patch` |
+| Ecosystem        | Approve condition                                                                              |
+| :--------------- | :--------------------------------------------------------------------------------------------- |
+| `docker`         | Only images `coopnorge/engineering-docker-images/e0`                                           |
+| `python`         | Development dependencies: `major`, `minor`, `patch`. Production dependencies: `minor`, `patch` |
+| `golang`         | `patch`                                                                                        |
+| `npm-and-yarn`   | `patch`                                                                                        |
+| `github-actions` | `minor`, `patch`                                                                               |
+| `nuget`          | `minor`, `patch`                                                                               |
 
 ## Configure workflow in your repository
 
 The workflow `approve-and-merge-dependabot-pr.yaml` is by default added to newly
 created repositories, and it is configured to automatically approve and merge
-the engineering devtools image updates. If you would like to add the workflow
-to an existing repository, create a PR with `github-workflow-approve-and-merge-dependabot-pr`
-file with the following content:
+the engineering devtools image updates. If you would like to add the workflow to
+an existing repository, create a PR with
+`github-workflow-approve-and-merge-dependabot-pr` file with the following
+content:
 
 ```yaml title="approve-and-merge-dependabot.yaml"
 ---
@@ -46,8 +46,8 @@ jobs:
 ## Configure `CODEOWNERS` in your repository
 
 The workflow will approve the PR on behalf of `@coopnorge/github-review-bots`
-team, hence `@coopnorge/github-review-bots` should also own
-the package ecosystem file(s).
+team, hence `@coopnorge/github-review-bots` should also own the package
+ecosystem file(s).
 
 See a specific example for ecosystem below.
 

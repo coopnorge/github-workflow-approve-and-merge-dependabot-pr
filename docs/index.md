@@ -1,4 +1,4 @@
-# GitHub workflow to approve and merge PR created by @dependabot
+# GitHub workflow to approve and merge PR created by @Dependabot
 
 You can use this workflow to enable automatic merge Dependabot PR. This workflow
 will automatically approve and merge Dependabot PR if build checks are passing.
@@ -23,7 +23,7 @@ content:
 
 ```yaml title="approve-and-merge-dependabot.yaml"
 ---
-name: Approve and merge dependabot PR
+name: Approve and merge Dependabot PR
 on:
   pull_request_target:
     types:

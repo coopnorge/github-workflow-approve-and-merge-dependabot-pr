@@ -1,1 +1,2 @@
-.vale
+.vale/*
+!.vale/styles/config/vocabularies/General
